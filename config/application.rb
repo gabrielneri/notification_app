@@ -17,6 +17,8 @@ module NotificationApp
 
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.active_job.queue_adapter = :shoryuken
+
     config.api_only = true
   end
 end

@@ -1,0 +1,3 @@
+concurrency: 5
+queues:
+  - <%= ENV.fetch("SQS_QUEUE_NAME") %>

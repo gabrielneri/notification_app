@@ -5,15 +5,13 @@ services:
       - .:/app
     ports:
       - "3000:3000"
-    environment:
-      - RAILS_ENV=development
-      - RAILS_MAX_THREADS=5
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/notification_app
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
+      - localstack
     networks:
       - notification_network
+    env_file:
+      - ".env"
 
   postgres:
     image: postgres:16-alpine
@@ -21,10 +19,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_DB: notification_app
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
     networks:
       - notification_network
     healthcheck:
@@ -32,6 +26,39 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    env_file:
+      - ".env"
+
+  worker:
+    build: .
+    command: bundle exec shoryuken -R -C config/shoryuken.yml
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - localstack
+    env_file:
+      - ".env"
+
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      SERVICES: sqs
+      DEBUG: 1
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./tmp/localstack:/var/lib/localstack
+    networks:
+      - notification_network
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    networks:
+      - notification_network
 
 networks:
   notification_network:
