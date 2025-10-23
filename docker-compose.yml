@@ -35,8 +35,12 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - postgres
-      - localstack
+      localstack:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - notification_network
     env_file:
       - ".env"
 
@@ -44,13 +48,23 @@ services:
     image: localstack/localstack:latest
     environment:
       SERVICES: sqs
-      DEBUG: 1
+      SQS_ENDPOINT_STRATEGY: off
+      LOCALSTACK_HOST: localstack
+      DEBUG: 0
     ports:
       - "4566:4566"
     volumes:
+      - ./localstack/init-localstack.sh:/etc/localstack/init/ready.d/init-sqs.sh
       - ./tmp/localstack:/var/lib/localstack
     networks:
       - notification_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - ".env"
 
   mailcatcher:
     image: schickling/mailcatcher
