@@ -35,3 +35,6 @@ Style/ClassAndModuleChildren:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Rails/StrongParametersExpect:
+  Enabled: false
