@@ -7,3 +7,4 @@ en:
             recipient:
               invalid: "must be a valid email address or phone number"
               invalid_email: "must be a valid email address"
+              invalid_phone: "must be a valid phone number"
