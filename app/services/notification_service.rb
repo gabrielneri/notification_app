@@ -1,6 +1,6 @@
 class NotificationService
   NOTIFICATION_SERVICES = {
-    'email' => EmailService
+    'email' => Channels::EmailService
   }.freeze
 
   def self.deliver(notification)
@@ -8,6 +8,6 @@ class NotificationService
 
     raise ArgumentError, "Unknown channel: #{notification.channel}." unless service
 
-    service.deliver(notification)
+    service.new(notification).call
   end
 end
