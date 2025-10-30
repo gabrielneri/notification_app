@@ -14,7 +14,7 @@
 #  updated_at :datetime         not null
 #
 class Notification < ApplicationRecord
-  enum :channel, { email: 0, sms: 1 }
+  enum :channel, { email: 0, sms: 1, telegram: 2 }
   enum :status, { pending: 0, processing: 1, sent: 2, failed: 3 }
 
   validates :channel, :recipient, :body, presence: true
