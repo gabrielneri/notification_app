@@ -19,5 +19,14 @@ module Channels
     def mark_as_failed
       notification.update!(status: :failed, failed_at: Time.current)
     end
+
+    def make_request(uri, payload)
+      req = Net::HTTP::Post.new(uri, { 'Content-Type' => 'application/json' })
+      req.body = payload.to_json
+
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+        http.request(req)
+      end
+    end
   end
 end

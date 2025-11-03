@@ -8,3 +8,4 @@ en:
               invalid: "must be a valid email address or phone number"
               invalid_email: "must be a valid email address"
               invalid_phone: "must be a valid phone number"
+              invalid_discord_webhook_url: "must be a valid discord webhook url"

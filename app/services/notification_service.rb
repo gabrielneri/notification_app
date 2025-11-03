@@ -2,7 +2,8 @@ class NotificationService
   NOTIFICATION_SERVICES = {
     'email' => Channels::EmailService,
     'sms' => Channels::SmsService,
-    'telegram' => Channels::TelegramService
+    'telegram' => Channels::TelegramService,
+    'discord' => Channels::DiscordService
   }.freeze
 
   def self.deliver(notification)
