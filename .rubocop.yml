@@ -20,9 +20,17 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Max: 15
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/ClassLength:
   Max: 150
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
 
 Layout/LineLength:
   Max: 120
