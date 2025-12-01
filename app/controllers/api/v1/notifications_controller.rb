@@ -2,7 +2,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   def create
     notification = Notification.new(notification_params)
 
-    if notification.save!
+    if notification.save
       NotificationWorker.perform_async(notification.id.to_s)
       render json: { data: notification }, status: :created
     else
