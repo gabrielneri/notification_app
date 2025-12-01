@@ -20,5 +20,7 @@ module NotificationApp
     config.active_job.queue_adapter = :shoryuken
 
     config.api_only = true
+
+    config.hosts << 'www.example.com'
   end
 end
