@@ -52,6 +52,16 @@ RSpec.describe Notification, type: :model do
       let(:notification) do
         build(:notification, channel: :telegram, subject: nil, body: 'Telegram message')
       end
+
+      it 'is valid with any non-empty recipient' do
+        notification.recipient = '123456789'
+        expect(notification).to be_valid
+      end
+
+      it 'is invalid when recipient is blank' do
+        notification.recipient = nil
+        expect(notification).not_to be_valid
+      end
     end
 
     context 'when channel is discord' do
