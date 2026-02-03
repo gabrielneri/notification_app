@@ -1,0 +1,128 @@
+openapi: 3.0.1
+info:
+  title: Notifications API
+  version: v1
+  description: API for sending and retrieving notifications.
+
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+paths:
+  /api/v1/notifications:
+    post:
+      summary: Create a notification
+      tags:
+        - Notifications
+      description: |
+        Creates a new notification and queues it for delivery.
+
+        **Note:** Notifications sent via the `sms` channel are currently **simulated**
+        and no real SMS messages are delivered.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notification:
+                  type: object
+                  required:
+                    - channel
+                    - recipient
+                    - subject
+                    - body
+                  properties:
+                    channel:
+                      type: string
+                      example: "email"
+                    recipient:
+                      type: string
+                      example: "user@example.com"
+                    subject:
+                      type: string
+                      example: "Hello"
+                    body:
+                      type: string
+                      example: "This is a notification."
+      responses:
+        "201":
+          description: Notification created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Notification'
+        "422":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+
+  /api/v1/notifications/{id}:
+    get:
+      summary: Retrieve a notification by ID
+      tags:
+        - Notifications
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Notification ID
+      responses:
+        "200":
+          description: Notification found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Notification'
+        "404":
+          description: Notification not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        subject:
+          type: string
+          example: "Hello"
+        body:
+          type: string
+          example: "This is a message"
+        recipient:
+          type: string
+          example: "user@example.com | +5577999999999 | 123456789 | https://discord.com/api/webhooks/123/abcDEF"
+        channel:
+          type: string
+          description: |
+            Notification delivery channel.
+
+            **Important:** SMS delivery is currently **simulated** and does not send real messages.
+          example: "email | sms | telegram | discord"
+        status:
+          type: string
+          example: "pending"
+

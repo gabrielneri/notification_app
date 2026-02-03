@@ -10,6 +10,10 @@ gem 'rails', '~> 8.0', '>= 8.0.2.1'
 gem 'aws-sdk-sqs'
 gem 'shoryuken'
 
+# rswag
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development do
   gem 'annotaterb'
   gem 'rubocop', require: false
