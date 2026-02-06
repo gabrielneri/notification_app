@@ -1,3 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'noreply@notifications.com'
+  default from: 'Notifications <notifications@gabrielneri.com>'
 end
