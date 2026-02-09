@@ -15,6 +15,8 @@ RSpec.describe Channels::TelegramService do
 
   before do
     allow(notification).to receive(:update!)
+    allow(service).to receive(:telegram_api_url)
+      .and_return('https://api.telegram.org/123456')
   end
 
   context 'when the delivery succeeds' do

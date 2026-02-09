@@ -1,7 +1,5 @@
 module Channels
   class TelegramService < ApplicationService
-    TELEGRAM_API_URL = "https://api.telegram.org/bot#{ENV.fetch('TELEGRAM_BOT_TOKEN')}".freeze
-
     def call
       mark_as_processing
       send_message
@@ -19,7 +17,7 @@ module Channels
     private
 
     def send_message
-      uri = URI("#{TELEGRAM_API_URL}/sendMessage")
+      uri = URI("#{telegram_api_url}/sendMessage")
       payload = {
         chat_id: notification.recipient,
         text: "#{notification.subject}\n#{notification.body}"
@@ -30,6 +28,10 @@ module Channels
       return if response.is_a?(Net::HTTPSuccess)
 
       raise StandardError, "Telegram API error: #{response.body}"
+    end
+
+    def telegram_api_url
+      "https://api.telegram.org/bot#{ENV.fetch('TELEGRAM_BOT_TOKEN')}"
     end
   end
 end

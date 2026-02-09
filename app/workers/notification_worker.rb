@@ -1,7 +1,7 @@
 class NotificationWorker
   include Shoryuken::Worker
 
-  shoryuken_options queue: ENV.fetch('SQS_QUEUE_NAME'), auto_delete: true
+  shoryuken_options queue: ENV.fetch('SQS_QUEUE_NAME'), auto_delete: true unless Rails.env.test?
 
   def perform(_sqs_msg, notification_id)
     notification = Notification.find(notification_id)

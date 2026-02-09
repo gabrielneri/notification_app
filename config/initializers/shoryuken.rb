@@ -1,3 +1,5 @@
+return if Rails.env.test?
+
 Shoryuken.configure_client do |config|
   config.sqs_client = Aws::SQS::Client.new(
     region: ENV.fetch('AWS_REGION'),
