@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: gasantosneri/notificationapp:latest
     container_name: notificationapp_web
     ports:
       - "3000:3000"
@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
 
   worker:
-    build: .
+    image: gasantosneri/notificationapp:latest
     container_name: notificationapp_worker
     command: bundle exec shoryuken -R -C config/shoryuken.yml
     env_file:
