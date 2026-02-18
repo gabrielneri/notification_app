@@ -4,14 +4,16 @@ RUN apt-get update -qq && \
     apt-get install -y \
     build-essential \
     libpq-dev \
-    libyaml-dev && \
+    libyaml-dev \
+    curl && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY Gemfile Gemfile.lock ./
+ENV RAILS_ENV=production
 
-RUN bundle install
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --without development test
 
 COPY . .
 

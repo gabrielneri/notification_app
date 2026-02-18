@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    container_name: notificationapp_web
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    restart: unless-stopped
+
+  worker:
+    build: .
+    container_name: notificationapp_worker
+    command: bundle exec shoryuken -R -C config/shoryuken.yml
+    env_file:
+      - .env.production
+    restart: unless-stopped
