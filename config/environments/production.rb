@@ -30,15 +30,20 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.resend.com",
+    address: 'smtp.resend.com',
     port: 465,
-    user_name: "resend",
-    password: ENV["RESEND_API_KEY"],
+    user_name: 'resend',
+    password: ENV.fetch('RESEND_API_KEY', nil),
     tls: true
   }
 
-  # URL options 
+  # URL options
   config.action_mailer.default_url_options = {
-    host: ENV["APP_HOST"]
+    host: ENV.fetch('APP_HOST', nil)
   }
+
+  config.hosts << ENV['APP_HOST'] if ENV['APP_HOST'].present?
+
+  config.hosts << 'localhost'
+  config.hosts << '127.0.0.1'
 end
