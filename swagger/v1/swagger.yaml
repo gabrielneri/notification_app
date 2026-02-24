@@ -5,8 +5,7 @@ info:
   description: API for sending and retrieving notifications.
 
 servers:
-  - url: http://localhost:3000
-    description: Local server
+  - url: /
 
 paths:
   /api/v1/notifications:
