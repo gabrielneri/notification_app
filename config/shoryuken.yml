@@ -1,3 +1,9 @@
-concurrency: 5
+concurrency: 1
+
+aws:
+  receive_message:
+    wait_time_seconds: 20
+    max_number_of_messages: 1
+
 queues:
   - <%= ENV.fetch("SQS_QUEUE_NAME") %>
