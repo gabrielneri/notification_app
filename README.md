@@ -2,6 +2,8 @@
 
 > A notification service with asynchronous delivery and multiple channels.
 
+**API Documentation:** https://api.gabrielneri.com/api-docs
+
 ## Overview
 
 This project exposes an HTTP API for creating notifications.
@@ -22,8 +24,8 @@ No real SMS messages are sent.
 - Multiple delivery channels:
   - Email (via Resend)
   - SMS (simulated)
-  - Telegram
-  - Discord
+  - Telegram (chat ID required)
+  - Discord (webhook URL required)
 
 ## Architecture
 

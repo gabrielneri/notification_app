@@ -113,7 +113,13 @@ components:
           example: "This is a message"
         recipient:
           type: string
-          example: "user@example.com | +5577999999999 | 123456789 | https://discord.com/api/webhooks/123/abcDEF"
+          description: |
+            Target recipient depending on the selected channel:
+            - email: valid email address
+            - sms: phone number
+            - telegram: chat ID
+            - discord: webhook URL
+          example: "user@example.com"
         channel:
           type: string
           description: |
